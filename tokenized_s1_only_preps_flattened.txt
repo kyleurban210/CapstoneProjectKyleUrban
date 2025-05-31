@@ -1,0 +1,10 @@
+
+ A Preposition on the list appears in Sentence Number: 1[101, 1996, 2047, 2916, 2024, 3835, 2438, 102]
+
+ A Preposition on the list appears in Sentence Number: 2[101, 1996, 2047, 2916, 2024, 3835, 2438, 102]
+
+ A Preposition on the list appears in Sentence Number: 3[101, 1996, 2047, 2916, 2024, 3835, 2438, 102]
+
+ A Preposition on the list appears in Sentence Number: 4[101, 1996, 2047, 2916, 2024, 3835, 2438, 102]
+
+ A Preposition on the list appears in Sentence Number: 5[101, 1996, 2047, 2916, 2024, 3835, 2438, 102]
