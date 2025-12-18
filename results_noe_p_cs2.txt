@@ -1,0 +1,3 @@
+mean score of results_noe_p_cs2 : 0.3503719702423806
+all scores of results_noe_p_cs2 :
+ [0. 0. 0. ... 1. 0. 1.]
