@@ -1,0 +1,8 @@
+mean accuracy score of MOD_CLS_results_p_cs2_StratifiedKFold_eval : 0.3635756779192031
+all accuracy scores of MOD_CLS_results_p_cs2_StratifiedKFold_eval :
+ [0.35491607 0.3501199  0.35971223 0.38369305 0.36930456 0.34052758
+ 0.36690647 0.35576923 0.36057692 0.39423077]
+mean f1_macro score of MOD_CLS_results_p_cs2_StratifiedKFold_eval : 0.3631572225267582
+all f1_macro scores of MOD_CLS_results_p_cs2_StratifiedKFold_eval :
+ [0.35460966 0.35063324 0.3581709  0.38481731 0.36932126 0.34078133
+ 0.36535545 0.35484691 0.36029051 0.39274566]

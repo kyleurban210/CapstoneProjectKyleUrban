@@ -1,0 +1,8 @@
+mean accuracy score of MOD_MEANPOOL_results_pool_p_cs2_StratifiedKFold_eval : 0.3921238009592326
+all accuracy scores of MOD_MEANPOOL_results_pool_p_cs2_StratifiedKFold_eval :
+ [0.39328537 0.34532374 0.40767386 0.41486811 0.42685851 0.39328537
+ 0.38369305 0.35576923 0.41346154 0.38701923]
+mean f1_macro score of MOD_MEANPOOL_results_pool_p_cs2_StratifiedKFold_eval : 0.3915099859674185
+all f1_macro scores of MOD_MEANPOOL_results_pool_p_cs2_StratifiedKFold_eval :
+ [0.39217598 0.34342225 0.40552529 0.41385953 0.42717285 0.39370514
+ 0.38242594 0.3553492  0.41433836 0.38712531]
