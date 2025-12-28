@@ -1,0 +1,8 @@
+mean accuracy score of UNMOD_CLS_results_pcs2_StratifiedKFold_eval : 0.36957606991330016
+all accuracy scores of UNMOD_CLS_results_pcs2_StratifiedKFold_eval :
+ [0.36211031 0.34532374 0.35971223 0.40527578 0.37889688 0.3381295
+ 0.37410072 0.38701923 0.36778846 0.37740385]
+mean f1_macro score of UNMOD_CLS_results_pcs2_StratifiedKFold_eval : 0.36858942069901424
+all f1_macro scores of UNMOD_CLS_results_pcs2_StratifiedKFold_eval :
+ [0.3618504  0.34392    0.35919609 0.40545191 0.37855792 0.33822121
+ 0.37328064 0.38273184 0.36592368 0.37676054]

@@ -1,0 +1,8 @@
+mean accuracy score of UNMOD_MEANPOOL_results_pool_pcs2_StratifiedKFold_eval : 0.3947576554141302
+all accuracy scores of UNMOD_MEANPOOL_results_pool_pcs2_StratifiedKFold_eval :
+ [0.41966427 0.38369305 0.40767386 0.40527578 0.41726619 0.39568345
+ 0.37889688 0.37259615 0.38461538 0.38221154]
+mean f1_macro score of UNMOD_MEANPOOL_results_pool_pcs2_StratifiedKFold_eval : 0.3943284910796713
+all f1_macro scores of UNMOD_MEANPOOL_results_pool_pcs2_StratifiedKFold_eval :
+ [0.41865411 0.38348294 0.40484159 0.4059264  0.41755099 0.39696514
+ 0.37773976 0.37050908 0.38545438 0.38216053]
