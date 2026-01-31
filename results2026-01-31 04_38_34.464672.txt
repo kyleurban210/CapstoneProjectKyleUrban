@@ -1,0 +1,39 @@
+Time: 2026-01-31 04:38:34.464672
+Results of modified data
+# of trials: 10
+Avg accuracy across trials: 0.8699306577011978
+Avg loss across trials: 0.3617118775844574
+Results from trial #1:  {'eval_loss': 0.3926384449005127, 'eval_accuracy': 0.8510191216642151, 'eval_runtime': 32.8227, 'eval_samples_per_second': 144.991, 'eval_steps_per_second': 9.079, 'epoch': 5.0} 
+Results from trial #2:  {'eval_loss': 0.3582755923271179, 'eval_accuracy': 0.8720319394830847, 'eval_runtime': 32.8315, 'eval_samples_per_second': 144.952, 'eval_steps_per_second': 9.077, 'epoch': 5.0} 
+Results from trial #3:  {'eval_loss': 0.3582755923271179, 'eval_accuracy': 0.8720319394830847, 'eval_runtime': 32.7145, 'eval_samples_per_second': 145.47, 'eval_steps_per_second': 9.109, 'epoch': 5.0} 
+Results from trial #4:  {'eval_loss': 0.3582755923271179, 'eval_accuracy': 0.8720319394830847, 'eval_runtime': 32.7351, 'eval_samples_per_second': 145.379, 'eval_steps_per_second': 9.103, 'epoch': 5.0} 
+Results from trial #5:  {'eval_loss': 0.3582755923271179, 'eval_accuracy': 0.8720319394830847, 'eval_runtime': 32.7462, 'eval_samples_per_second': 145.33, 'eval_steps_per_second': 9.1, 'epoch': 5.0} 
+Results from trial #6:  {'eval_loss': 0.3582755923271179, 'eval_accuracy': 0.8720319394830847, 'eval_runtime': 32.7453, 'eval_samples_per_second': 145.334, 'eval_steps_per_second': 9.101, 'epoch': 5.0} 
+Results from trial #7:  {'eval_loss': 0.3582755923271179, 'eval_accuracy': 0.8720319394830847, 'eval_runtime': 32.7152, 'eval_samples_per_second': 145.467, 'eval_steps_per_second': 9.109, 'epoch': 5.0} 
+Results from trial #8:  {'eval_loss': 0.3582755923271179, 'eval_accuracy': 0.8720319394830847, 'eval_runtime': 32.8681, 'eval_samples_per_second': 144.791, 'eval_steps_per_second': 9.067, 'epoch': 5.0} 
+Results from trial #9:  {'eval_loss': 0.3582755923271179, 'eval_accuracy': 0.8720319394830847, 'eval_runtime': 32.8377, 'eval_samples_per_second': 144.925, 'eval_steps_per_second': 9.075, 'epoch': 5.0} 
+Results from trial #10:  {'eval_loss': 0.3582755923271179, 'eval_accuracy': 0.8720319394830847, 'eval_runtime': 32.7938, 'eval_samples_per_second': 145.119, 'eval_steps_per_second': 9.087, 'epoch': 5.0} 
+
+______________________________________________
+Results of unmodified data
+# of trials: 10
+Avg accuracy across trials: 0.9100000000000001
+Avg loss across trials: 0.29716123193502425
+Results from trial #1:  {'eval_loss': 0.11495082080364227, 'eval_accuracy': 1.0, 'eval_runtime': 0.1333, 'eval_samples_per_second': 150.069, 'eval_steps_per_second': 15.007, 'epoch': 5.0} 
+Results from trial #2:  {'eval_loss': 0.3174068331718445, 'eval_accuracy': 0.9, 'eval_runtime': 0.1373, 'eval_samples_per_second': 145.687, 'eval_steps_per_second': 14.569, 'epoch': 5.0} 
+Results from trial #3:  {'eval_loss': 0.3174068331718445, 'eval_accuracy': 0.9, 'eval_runtime': 0.1333, 'eval_samples_per_second': 150.042, 'eval_steps_per_second': 15.004, 'epoch': 5.0} 
+Results from trial #4:  {'eval_loss': 0.3174068331718445, 'eval_accuracy': 0.9, 'eval_runtime': 0.1316, 'eval_samples_per_second': 151.993, 'eval_steps_per_second': 15.199, 'epoch': 5.0} 
+Results from trial #5:  {'eval_loss': 0.3174068331718445, 'eval_accuracy': 0.9, 'eval_runtime': 0.1341, 'eval_samples_per_second': 149.149, 'eval_steps_per_second': 14.915, 'epoch': 5.0} 
+Results from trial #6:  {'eval_loss': 0.3174068331718445, 'eval_accuracy': 0.9, 'eval_runtime': 0.1317, 'eval_samples_per_second': 151.847, 'eval_steps_per_second': 15.185, 'epoch': 5.0} 
+Results from trial #7:  {'eval_loss': 0.3174068331718445, 'eval_accuracy': 0.9, 'eval_runtime': 0.132, 'eval_samples_per_second': 151.513, 'eval_steps_per_second': 15.151, 'epoch': 5.0} 
+Results from trial #8:  {'eval_loss': 0.3174068331718445, 'eval_accuracy': 0.9, 'eval_runtime': 0.1322, 'eval_samples_per_second': 151.301, 'eval_steps_per_second': 15.13, 'epoch': 5.0} 
+Results from trial #9:  {'eval_loss': 0.3174068331718445, 'eval_accuracy': 0.9, 'eval_runtime': 0.135, 'eval_samples_per_second': 148.173, 'eval_steps_per_second': 14.817, 'epoch': 5.0} 
+Results from trial #10:  {'eval_loss': 0.3174068331718445, 'eval_accuracy': 0.9, 'eval_runtime': 0.1322, 'eval_samples_per_second': 151.288, 'eval_steps_per_second': 15.129, 'epoch': 5.0} 
+
+_____________________________________________
+Additional Information over training on unmodified data:number of epochs: 5
+logging steps: 1
+number of layers frozen: 8
+per device train batch size: 16
+per device eval batch size: 16
+was small sample set (size 20) training set skipped?:  no
