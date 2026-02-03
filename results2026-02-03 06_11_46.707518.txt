@@ -1,0 +1,29 @@
+Time: 2026-02-03 06:11:46.707518
+Results of modified data eval
+# of trials: 1
+Avg accuracy across trials: 0.6281512605042017
+Avg loss across trials: 0.9056351780891418
+Results from trial #1:  {'eval_loss': 0.9056351780891418, 'eval_accuracy': 0.6281512605042017, 'eval_runtime': 0.9642, 'eval_samples_per_second': 493.665, 'eval_steps_per_second': 31.113, 'epoch': 5.0} 
+
+______________________________________________
+Results of unmodified data eval
+# of trials: 1
+Avg accuracy across trials: 0.6113445378151261
+Avg loss across trials: 0.9162806868553162
+Results from trial #1:  {'eval_loss': 0.9162806868553162, 'eval_accuracy': 0.6113445378151261, 'eval_runtime': 0.9319, 'eval_samples_per_second': 510.802, 'eval_steps_per_second': 32.193, 'epoch': 5.0} 
+
+_____________________________________________
+Results of unmodified data training
+# of trials: 1
+Avg loss across trials: 0.7033065583501289
+Results from trial #1:  TrainOutput(global_step=1340, training_loss=0.7033065583501289, metrics={'train_runtime': 133.7077, 'train_samples_per_second': 160.163, 'train_steps_per_second': 10.022, 'total_flos': 1408643460161280.0, 'train_loss': 0.7033065583501289, 'epoch': 5.0}) 
+
+_____________________________________________
+Additional Information over training on unmodified data: 
+number of epochs: 5
+logging steps: 1
+number of layers frozen: 8
+per device train batch size: 16
+per device eval batch size: 16
+fp16 status: True
+was small sample set (size 20) training set skipped?:  no
