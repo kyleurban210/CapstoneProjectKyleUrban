@@ -1,0 +1,56 @@
+Time: 2026-02-04 07:20:22.439570
+Results of modified data eval
+# of trials: 10
+Avg accuracy across trials: 0.6678571428571429
+Avg loss across trials: 0.8942862570285797
+Results from trial #1:  {'eval_loss': 0.8122882843017578, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 0.9567, 'eval_samples_per_second': 497.543, 'eval_steps_per_second': 31.358, 'epoch': 4.0} 
+Results from trial #2:  {'eval_loss': 0.9033971428871155, 'eval_accuracy': 0.6680672268907563, 'eval_runtime': 0.9527, 'eval_samples_per_second': 499.61, 'eval_steps_per_second': 31.488, 'epoch': 4.0} 
+Results from trial #3:  {'eval_loss': 0.9033971428871155, 'eval_accuracy': 0.6680672268907563, 'eval_runtime': 0.9548, 'eval_samples_per_second': 498.556, 'eval_steps_per_second': 31.422, 'epoch': 4.0} 
+Results from trial #4:  {'eval_loss': 0.9033971428871155, 'eval_accuracy': 0.6680672268907563, 'eval_runtime': 0.9583, 'eval_samples_per_second': 496.721, 'eval_steps_per_second': 31.306, 'epoch': 4.0} 
+Results from trial #5:  {'eval_loss': 0.9033971428871155, 'eval_accuracy': 0.6680672268907563, 'eval_runtime': 0.9615, 'eval_samples_per_second': 495.053, 'eval_steps_per_second': 31.201, 'epoch': 4.0} 
+Results from trial #6:  {'eval_loss': 0.9033971428871155, 'eval_accuracy': 0.6680672268907563, 'eval_runtime': 0.9652, 'eval_samples_per_second': 493.138, 'eval_steps_per_second': 31.08, 'epoch': 4.0} 
+Results from trial #7:  {'eval_loss': 0.9033971428871155, 'eval_accuracy': 0.6680672268907563, 'eval_runtime': 0.9633, 'eval_samples_per_second': 494.153, 'eval_steps_per_second': 31.144, 'epoch': 4.0} 
+Results from trial #8:  {'eval_loss': 0.9033971428871155, 'eval_accuracy': 0.6680672268907563, 'eval_runtime': 0.9793, 'eval_samples_per_second': 486.056, 'eval_steps_per_second': 30.634, 'epoch': 4.0} 
+Results from trial #9:  {'eval_loss': 0.9033971428871155, 'eval_accuracy': 0.6680672268907563, 'eval_runtime': 0.9522, 'eval_samples_per_second': 499.878, 'eval_steps_per_second': 31.505, 'epoch': 4.0} 
+Results from trial #10:  {'eval_loss': 0.9033971428871155, 'eval_accuracy': 0.6680672268907563, 'eval_runtime': 0.9644, 'eval_samples_per_second': 493.583, 'eval_steps_per_second': 31.108, 'epoch': 4.0} 
+
+______________________________________________
+Results of unmodified data eval
+# of trials: 10
+Avg accuracy across trials: 0.6672268907563026
+Avg loss across trials: 0.8813989341259003
+Results from trial #1:  {'eval_loss': 0.7932332754135132, 'eval_accuracy': 0.6785714285714286, 'eval_runtime': 1.0078, 'eval_samples_per_second': 472.325, 'eval_steps_per_second': 29.768, 'epoch': 4.0} 
+Results from trial #2:  {'eval_loss': 0.8911951184272766, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 1.0051, 'eval_samples_per_second': 473.562, 'eval_steps_per_second': 29.846, 'epoch': 4.0} 
+Results from trial #3:  {'eval_loss': 0.8911951184272766, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 1.0102, 'eval_samples_per_second': 471.206, 'eval_steps_per_second': 29.698, 'epoch': 4.0} 
+Results from trial #4:  {'eval_loss': 0.8911951184272766, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 1.0264, 'eval_samples_per_second': 463.775, 'eval_steps_per_second': 29.23, 'epoch': 4.0} 
+Results from trial #5:  {'eval_loss': 0.8911951184272766, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 1.0075, 'eval_samples_per_second': 472.465, 'eval_steps_per_second': 29.777, 'epoch': 4.0} 
+Results from trial #6:  {'eval_loss': 0.8911951184272766, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 1.0153, 'eval_samples_per_second': 468.81, 'eval_steps_per_second': 29.547, 'epoch': 4.0} 
+Results from trial #7:  {'eval_loss': 0.8911951184272766, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 1.0113, 'eval_samples_per_second': 470.665, 'eval_steps_per_second': 29.664, 'epoch': 4.0} 
+Results from trial #8:  {'eval_loss': 0.8911951184272766, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 1.0049, 'eval_samples_per_second': 473.699, 'eval_steps_per_second': 29.855, 'epoch': 4.0} 
+Results from trial #9:  {'eval_loss': 0.8911951184272766, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 1.0068, 'eval_samples_per_second': 472.805, 'eval_steps_per_second': 29.799, 'epoch': 4.0} 
+Results from trial #10:  {'eval_loss': 0.8911951184272766, 'eval_accuracy': 0.6659663865546218, 'eval_runtime': 1.0086, 'eval_samples_per_second': 471.929, 'eval_steps_per_second': 29.743, 'epoch': 4.0} 
+
+_____________________________________________
+Results of unmodified data training
+# of trials: 10
+Avg loss across trials: 0.6032086150831917
+Results from trial #1:  TrainOutput(global_step=1072, training_loss=0.5631331398304719, metrics={'train_runtime': 140.0827, 'train_samples_per_second': 122.299, 'train_steps_per_second': 7.653, 'total_flos': 1126914768129024.0, 'train_loss': 0.5631331398304719, 'epoch': 4.0}) 
+Results from trial #2:  TrainOutput(global_step=1072, training_loss=0.6076614456668273, metrics={'train_runtime': 139.9801, 'train_samples_per_second': 122.389, 'train_steps_per_second': 7.658, 'total_flos': 1126914768129024.0, 'train_loss': 0.6076614456668273, 'epoch': 4.0}) 
+Results from trial #3:  TrainOutput(global_step=1072, training_loss=0.6076614456668273, metrics={'train_runtime': 138.1488, 'train_samples_per_second': 124.011, 'train_steps_per_second': 7.76, 'total_flos': 1126914768129024.0, 'train_loss': 0.6076614456668273, 'epoch': 4.0}) 
+Results from trial #4:  TrainOutput(global_step=1072, training_loss=0.6076614456668273, metrics={'train_runtime': 138.385, 'train_samples_per_second': 123.8, 'train_steps_per_second': 7.747, 'total_flos': 1126914768129024.0, 'train_loss': 0.6076614456668273, 'epoch': 4.0}) 
+Results from trial #5:  TrainOutput(global_step=1072, training_loss=0.6076614456668273, metrics={'train_runtime': 138.4313, 'train_samples_per_second': 123.758, 'train_steps_per_second': 7.744, 'total_flos': 1126914768129024.0, 'train_loss': 0.6076614456668273, 'epoch': 4.0}) 
+Results from trial #6:  TrainOutput(global_step=1072, training_loss=0.6076614456668273, metrics={'train_runtime': 138.1731, 'train_samples_per_second': 123.989, 'train_steps_per_second': 7.758, 'total_flos': 1126914768129024.0, 'train_loss': 0.6076614456668273, 'epoch': 4.0}) 
+Results from trial #7:  TrainOutput(global_step=1072, training_loss=0.6076614456668273, metrics={'train_runtime': 138.3669, 'train_samples_per_second': 123.816, 'train_steps_per_second': 7.748, 'total_flos': 1126914768129024.0, 'train_loss': 0.6076614456668273, 'epoch': 4.0}) 
+Results from trial #8:  TrainOutput(global_step=1072, training_loss=0.6076614456668273, metrics={'train_runtime': 138.4586, 'train_samples_per_second': 123.734, 'train_steps_per_second': 7.742, 'total_flos': 1126914768129024.0, 'train_loss': 0.6076614456668273, 'epoch': 4.0}) 
+Results from trial #9:  TrainOutput(global_step=1072, training_loss=0.6076614456668273, metrics={'train_runtime': 140.8642, 'train_samples_per_second': 121.621, 'train_steps_per_second': 7.61, 'total_flos': 1126914768129024.0, 'train_loss': 0.6076614456668273, 'epoch': 4.0}) 
+Results from trial #10:  TrainOutput(global_step=1072, training_loss=0.6076614456668273, metrics={'train_runtime': 138.7498, 'train_samples_per_second': 123.474, 'train_steps_per_second': 7.726, 'total_flos': 1126914768129024.0, 'train_loss': 0.6076614456668273, 'epoch': 4.0}) 
+
+_____________________________________________
+Additional Information over training on unmodified data: 
+number of epochs: 4
+logging steps: 1
+number of layers frozen: 0
+per device train batch size: 16
+per device eval batch size: 16
+fp16 status: True
+was small sample set (size 20) training set skipped?:  no
