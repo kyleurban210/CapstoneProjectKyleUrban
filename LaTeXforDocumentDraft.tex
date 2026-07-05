@@ -1,0 +1,601 @@
+
+
+\documentclass[12pt,letterpaper]{article}	
+\UseRawInputEncoding
+% PERSONAL PACKAGES [add below] 
+\usepackage{expex,marvosym,tabularray,xcolor}
+\usepackage{tabularx} %gives me tables that adjust to text length
+\usepackage{verbatim} %gives me multiline comments
+\usepackage{multirow} %lets me do combine multiple rows within a column
+\usepackage{multicol} %multiple columns! 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{dcolumn} %make the decimals align in table
+\newcolumntype{d}[1]{D{.}{.}{#1}} % Define a shortcut shorthand
+
+
+%%% LSA LAYOUT AND PACKAGES
+\usepackage{times} %obsolete, but works for the font and style
+\usepackage{tipa}
+\usepackage{natbib}
+ 	\setcitestyle{semicolon,aysep={},yysep={,},notesep={:}}
+ 	%see below for instructions on natbib bibliography
+
+\usepackage{lipsum} % this and the following package and the settings beneath them are for maintaining indentation and still having ragged-right alignmnent
+\usepackage{ragged2e}
+\usepackage{booktabs}
+\usepackage{array}
+
+\setlength\RaggedRightParindent{0.3in}
+\RaggedRight
+
+\usepackage[bottom]{footmisc} % makes the footnotes stock to the bottom of the page
+\usepackage{scrextend} % this package and the following settings are for the footnote formatting
+\deffootnote[.5em]{0em}{1em}{\textsuperscript{\thefootnotemark}\,}
+
+\newcounter{savefootnote}   % these settings allow the use of an asterisk as a footnote label (for the author line below the title.
+\newcounter{symfootnote}
+\newcommand{\symfootnote}[1]{%
+   \setcounter{savefootnote}{\value{footnote}}%
+   \setcounter{footnote}{\value{symfootnote}}%
+   \ifnum\value{footnote}>8\setcounter{footnote}{0}\fi%
+   \let\oldthefootnote=\thefootnote%
+   \renewcommand{\thefootnote}{\fnsymbol{footnote}}%
+   \footnote{#1}%
+   \let\thefootnote=\oldthefootnote%
+   \setcounter{symfootnote}{\value{footnote}}%
+   \setcounter{footnote}{\value{savefootnote}}%
+}
+
+\usepackage[labelsep=period]{caption}
+
+\usepackage[margin=1.0in]{geometry}
+\usepackage[compact]{titlesec}
+	\titleformat{\section}[runin]{\normalfont\bfseries}{\thesection.}{.5em}{}[.]
+	\titleformat{\subsection}[runin]{\normalfont\scshape}{\thesubsection.}{.5em}{}[.]
+	\titleformat{\subsubsection}[runin]{\normalfont\scshape}{\thesubsubsection.}{.5em}{}[.]
+%\usepackage[usenames,dvipsnames]{color}	
+\usepackage[colorlinks,allcolors={black},urlcolor={blue}]{hyperref} 
+
+%%% PERSONAL DEFINITIONS (if needed)
+
+%%% LSA DEFINITIONS
+
+% for the abstract
+% Abstracts have to be 12pt, indented 1.4 inches on each side, and inline with the label
+\renewenvironment{abstract}{%
+\noindent\begin{minipage}{1\textwidth}
+\setlength{\leftskip}{0.4in}
+\setlength{\rightskip}{0.4in}
+\textbf{Abstract.}}
+{\end{minipage}}
+
+% keywords environment
+\newenvironment{keywords}{%
+\vspace{.5em}
+\noindent\begin{minipage}{1\textwidth}
+\setlength{\leftskip}{0.4in}
+\setlength{\rightskip}{0.4in}
+\textbf{Keywords.}}
+{\end{minipage}}
+
+%%% MAIN DOCUMENT
+\begin{document} 
+
+%%If using linguex, need the following commands to get correct LSA style spacing
+%% these have to be after  \begin{document}
+%\setlength{\Extopsep}{6pt}
+%\setlength{\Exlabelsep}{9pt} %effect of 0.4in indent from left text edge
+
+%title and author lines
+\begin{center}
+\normalfont\bfseries
+The Natural Language Inference Abilities of a Large Language Model
+\vskip .5em
+\normalfont
+{Kyle Urban \& Zachary K Stine\symfootnote{Our python code for both experiments is available on GitHub at \url{https://github.com/kyleurban210/Kyle-Urban-Honors-Capstone-Project-Cleaned-Up-Repository}. Thank you to the Norbert O. Schelder Honors College for additional guidance and support. Authors: Kyle Urban, University of Central Arkansas (\href{kyleurban210@gmail.com}{kyleurban210@gmail.com}) \& Zachary K Stine, University of Central Arkansas (\href{mailto:zstine@uca.edu}{zstine@uca.edu}).}}
+\vskip .5em
+\end{center}
+
+\begin{abstract}
+%this is a work in progress
+As Large Language Models (LLMs) see more use in daily life, it is important to know where their current shortcomings are when it comes to understanding human users. In this study, we analyze a large language model's performance on a task related to implication. We investigated two things. One, how a pre-trained but not fine-tuned LLM can accurately predict one of three types of logical implication? Two, what part do spatial prepositions play in that prediction? We conducted our experiment using a dataset of 10k related sentence pairs – one instance with prepositions present and another absent. We created a classification task to sort sentences into three categories (entailment, contradiction, or neutral) based on underlying mathematical representation created by the BERT LLM. We found that the resulting accuracy scores never eclipsed ${\sim}50\%$ on either dataset---not high enough to be conclusive. Scores did not improve even after modifying our experimental pipeline. These findings told us an untuned BERT cannot adequately make context predictions. We did a second experiment using a fine-tuned model for classification. It yielded results that were conclusive and showed that the lack of spatial prepositions does not significantly affect task performance.
+\end{abstract}
+
+\begin{keywords} %Separated by semicolons
+Computational Linguistics; Natural Language Processing; Large Language Models; Natural Language Inference; Artificial Intelligence; 
+\end{keywords}
+
+\section{Introduction} %Section titles will be displayed inline
+
+
+
+In 2026, language is no longer restricted to people. The introduction of the transformer architecture \citep{vaswani_attention_2017} has ushered in a new class of language models. These models are often called Large Language Models (LLMs) due to the large number of parameters such models comprise as well as the massive size of the datasets on which they are trained. While LLMs can do all kinds of things, their usefulness is limited by their size and complexity which makes it challenging to determine why they are able to perform well on certain tasks. In this paper, we investigate the role of spatial prepositions in an entailment task. To do so, we take a model, BERT, and see how it does on the task with and without prepositions included in its inputs. In section 2, we give some brief background on LLMs, entailment, and spatial prepositions. We describe our methodology in section 3 and report our results in section 4. We discuss the implications of our findings in section 5 and consider the limitations of the present study. 
+
+
+
+% 2) Introduce the gap: While LLMs can do all kinds of things, their usefulness in the understanding of human language is limited by their size and complexity which makes it challenging to determine why they are able to perform well on certain tasks. ---check
+
+% 3) What we are going to do: In this paper, we investigate the role of spatial prepositions in the entailment task. To do so, we take a model, BERT, and see how it does on the task with and without prepositions included in its inputs. 
+
+
+% 4) Sketch out the paper: In section 2, we give some brief background on LLMs, entailment, and spatial prepositions. We describe our methodology in section 3 and report our results in section 4. We discuss the implications of our findings in section 5 and consider the limitations of the present study. 
+
+
+ 
+
+
+
+\section{Background}
+
+
+
+\subsection{Landmark and Trajector}
+%weird little intro sentence
+Our hypothesis lies at the intersection of two linguistics concepts, landmark-trajector and sentence relations, and how that combination is encoded by an LLM. 
+%Landmark and Trajector ( I realize that I completely botched this in my original project) 
+landmark (LM) and trajector (TR) deals with the concept of spatial or temporal relationships between nouns in a sentence \citep{evans_green_cogling_2006}.
+For example, in the sentence ``the bird flew over the wall", ``bird" is the TR and the ``wall" is the LM  \citep[p.~335]{evans_green_cogling_2006}. In another sentence, ``the tablecloth is over the table", ``the tablecloth" is the TR and ``the table" is the LM  \citep[pp.~333--348]{evans_green_cogling_2006}. As such, the TR represents an object that is in motion relative to another object, the LM, which acts as a point of reference. To further soak in the idea, a table of sample sentences with the LM and TR is listed below
+
+%I may cut examples 6 to 10 as they make the table look ugly
+
+\begin{table}[h]
+\centering
+    \begin{tabularx}{\textwidth}{l X c c c}
+    \toprule
+    No. & Sentence & LM & TR & trajectory preposition \\
+    \midrule
+    1  & the bird flew over the wall & the wall & the bird & ``over" \\ %Evans and Green pg 335 example 6
+    2  & the tablecloth is over the table & the table & the tablecloth & ``over"\\ %Evans and Green pg 344 example 17
+    3  & then he gave in to the pain & the pain & he & ``in" \\  %hypothesis sentence 1222 from MultiNLI  
+    4  & He came out of the closet & the closet & he & ``out" \\  %I cooked this one up myself
+    5  & She thumbed through the papers & the papers & she & ``through" \\   %I cooked this one up myself
+ 
+    %6  & The final rule contains a Federalism Assessment under Executive Order & Executive Order & Federalism Assessment & "under"\\ %premise sentence 1505 from MultiNLI
+    %7  & Simmons, probably rap's greatest entrepreneur, lives in New York... & New York & Simmons & "in"\\ %premise sentence 3946 from MultiNLI
+    %8  & The recommendation comes from the court's Task Force on Civil Equal Justice Funding.... & the court's task force & the recommendation & "on" \\ %premise sentence 4092 from MultiNLI
+    %9  & (You) Come on (here), let's have tea.  & here & you & "on"\\ %premise sentence 3809
+    %10 & ...a poverty lawyer working for one of New York's many agencies... & one of New York's many agencies & a poverty lawyer & "for"\\ %premise sentence 634
+
+   
+    \bottomrule
+    \end{tabularx}
+\caption{Example sentences of landmark and trajector}
+\label{t:examples}
+\end{table}
+
+
+
+
+
+%Spatial Prepositions
+The spatial relationship between the LM and TR is encapsulated by the preposition. Take again the first sample sentence (Table \ref{t:examples}). The preposition ``over" represents where the TR resides in space with respect to the LM. However, prepositions can also encode multiple meanings due to polysemy  \citep[pp.~342--345]{evans_green_cogling_2006}. In the second example, ``over" can be interpreted as the tablecloth trajector physically touching the table landmark on its topside, whereas ``over" in the first sentence signifies motion above an object, but not making contact with it. The polysemy of prepositions that is displayed in LM-TR configurations is important when considering how its different interpretations affect what a sentence entails.
+
+\subsection{Sentence Relations}
+%entailment
+Entailment is a logical relationship between sentences where if one sentence holds true, the other must also hold true \citep[pp.~94--95]{saeed_semantics_2016}. For example, sentence $p$, ``the emperor was assassinated'' and sentence $q$, ``the emperor is dead" exist such that if $p$ is true, then $q$ is true. Ergo, $p$ entails $q$, $p \rightarrow q$. Furthermore, entailment is usually a one way relationship. For example, a negation of the premise $p$ does not necessarily render the hypothesis $q$ false; e.g: ``the emperor was not assassinated" doesn't rule out that ``the emperor is dead." It could be possible that the emperor died of other causes. Additionally, entailment is canceled out when the hypothesis is negated; e.g: sentence $q\neg$, ``the emperor is not dead" renders the premise $p$, ``the emperor was assassinated", as false. 
+
+\begin{table}[h]
+\centering
+	\begin{tabular}{c c c}
+	$p$ &   & $q$\\
+	\hline
+	T & $\rightarrow$ & T \\
+	F & $\rightarrow$ & T or F\\
+    F & $\leftarrow$ & F\\
+    T or F & $\leftarrow$ & T\\
+	\hline
+	\end{tabular}
+\caption{Composite Truth Table for Entailment \protect\citep[p.~95]{saeed_semantics_2016}} 
+\label{t:entail_table}
+\end{table}
+
+
+
+%why tie together
+Entailment relations where LM-TR relations are present give a good test case for how semantical important a preposition is to an LLM. If removal of prepositions breaks an LLM's ability to properly detect entailment relations, then we know that spatial prepositions had an important role. If not, then we know their role was minimal. 
+
+
+%contradiction too
+Additionally, entailment is not the only instance where the semantic relevance of spatial prepositions is displayed. Contradiction is logical relationship between sentences where if one is true, the other must be false \citep[p.~97]{saeed_semantics_2016} which can also provide instances of LM-TR relationships. 
+
+\begin{table}[h]
+\centering
+	\begin{tabular}{c c c}
+	$p$ &   & $q$\\
+	\hline
+	T & $\rightarrow$ & F \\
+	F & $\rightarrow$ & T\\
+    T & $\leftarrow$ & F\\
+    F & $\leftarrow$ & T\\
+	\hline
+	\end{tabular}
+\caption{Composite Truth Table for Contradiction \protect\citep[p.~97]{saeed_semantics_2016}}
+\label{t:contra_table}
+\end{table}
+
+
+
+
+
+\subsection{Classification Task}
+%The classification task
+In machine learning, a classification task involves a model predicting the categories that data from a test set belong to after having been trained on a larger, separate set of data. A model makes its predictions through a mathematical process known as gradient descent, where a loss function calculates weight updates until predicted values converge; i.e:  until the partial derivative of the difference between the predicted values and the actual values is zero. The performance of a classification model can be measured by accuracy of predictions. A classification task suited for our experiment consists of a model predicting whether pairs of premise and hypothesis sentences are either an entailment relationship, a contradictory relationship, or a neutral relationship---where $p$ and $q$ are logically unrelated. It was our hope that any difference---or lack of---that arises in accuracy score on the classification task between a preposition having and preposition lacking data set was indicative of the semantic relevance---or irrelevance---of those selected spatial prepositions, in turn answering our hypothesis.
+
+
+
+
+
+\subsection{Choosing a Suitable Model}
+%Why BERT?
+Out of the many LLMs that exist, we chose to run our experiments on the Bidirectional Encoder Representations from Transformers (BERT) model \citep{devlin_bert}. BERT is an encoder model with an attention layer. Thus, its model architecture is designed to handle contexts where words may be missing from a semantic context. BERT fits perfectly with our experiments, where we will be removing spatial prepositions from related sentence pairs to see how that affects performance on a classification task between entailment, contradiction, or neutrality. While not being the newest LLM available, BERT has been a popular choice for other computational linguistics research and its context interpretation abilities haven't been fully explored. Given the current meta in the machine learning world to constantly chase after the newest thing, we felt it was best to explore an older model to find where its gaps in performance were, if any. Finally, BERT was very feasible given our limited computational resources.  
+
+
+
+
+ 
+\section{Methodology}
+\subsection{The Corpus}
+%the dataset
+The MultiNLI is a corpus of 433k pairs of sentences that either entail, contradict, or neutralize spread across five genres of context discourse: fictional literature, government literature, slate poetry, telephone conversations, and travel brochures \citep{williams_bowman_multinli}. In this corpus and in other literature regarding it, the premise sentence is referred to either as $p$ or $s1$. Likewise, the hypothesis sentence is often referred to as either $h$, $q$, or $s2$. Additionally, each sentence pair comes with a $gold\_label$ of either entailment $e$, contradiction $c$, or neutral $n$, which is the designated correct logical relation between the premise and hypothesis sentences of that pair. The gold label is important as it acts as our score card, letting us compare the predictions of the classification model for each pair's label to its actual label in order to get an accuracy score. Finally, each sentence pair has an ID number used for keeping track of data mutations. 
+
+We used 10K subset from the MultiNLI corpus that was publicly available for download. From that, we derived a smaller subset that only contained instances of pairs with one or more selected spatial prepositions in the premise sentence. For the first experiment, where we identified 13 spatial prepositions, we derived a working subset 4167 pairs of sentences. For the second experiment, where we increased our list to 25 prepositions, we extended that working subset to 4850 pairs. 
+
+
+%For the love of god do not forget these nubers
+%#4167 pairs for the first experiment
+%#4850 pairs for the second experiment
+
+%table of the prepositions being removed
+
+\begin{table}[h]
+\begin{flushleft}
+	\begin{tabularx}{\textwidth}{l X}
+    13 Preposition List: & [``on top",``in", ``out", ``over", ``under", ``above", ``below", ``inside", ``outside",``around", ``behind", ``on" , ``through"]\\
+    \hline
+    25 Preposition List: & [``on top", ``in front", ``next to", ``in", ``out", ``over", ``under", ``above", ``below", ``inside", ``outside", ``around", ``behind", ``on", ``near", ``through", ``throughout", ``beneath", ``into", ``beside", ``off", ``between", ``next", ``upon", ``from"]\\
+	
+	\hline
+	\end{tabularx}
+\caption{Table of selected spatial prepositions for experiments one and two} 
+\label{t:preps}
+\end{flushleft}
+\end{table}
+
+%its modification
+\subsection{Data Preparation}
+For both experiments, we created two instances of our working subsets to act as a control and variable version. The variable set had all the target prepositions removed from the premise sentence. This modification was done at the token level after each sentence pair had been tokenized by BERT. We used a python function to delete the corresponding token of any and all of the target prepositions in each premise sentence. We did not mask nor pad the sentences after deleting the preposition tokens, as we felt it would be an incomplete removal that wouldn't truly encapsulate how BERT encoded the sentences with missing components. The premise sentence in the control set was left unmodified, its original preposition tokens intact. In both the control and variable dataset, the hypothesis sentence was left unmodified. 
+
+Some of the data preparation differed between the first and second experiments. In the first experiment, we ran trials where the premise and hypothesis of each pair were tokenized and embedded by BERT separately. Later, we ran trials where both were tokenized and embedded together after earlier trial results indicated it would improve classifier model performance by getting BERT model to encode the entire pairing in latent space. In the second experiment, we exclusively tokenized and embedded the pairs as one string like our later trials in experiment one. For instances where the premise and hypothesis were embedded jointly, we used an attention mask to make the BERT model recognize that it was encoding two discrete, yet related sentences rather than one long sentence. Where the premise and hypothesis were embedded separately, we concatenated the summary vectors of each sentence $(u, v)$ with the pair's element wise product $(u * v)$ and absolute element wise difference $|u -v|$ \citep{conneau_etal_2017_supervised} post embedding to create input data for our classification task in experiment one. In instances where jointly embedded pairs were used as classification input in experiment one, we used the summary vector the pair produced without any additional modification or concatenation. The second experiment's architecture did not require us to extract summary vectors from the latent space to be used as input for the classification task. 
+
+
+
+
+% (i) concatenation of the two representations (u, v); (ii) element-wise product u ∗ v; and (iii) absolute element-wise difference |u − v|. (Conneau et al., 2018)  this guy also said you could encode stuff jointly, didn't realise that until now. 
+
+%Experiment 1
+\subsection{The First Experiment}
+
+Our first experiment took the data that was embedded by BERT and used it as input to a distinct classification model. Specifically, we took various components of the BERT's last hidden state, such as CLS or mean pool vector embeddings. Ideally, these representations of BERT's latent space would serve as a mathematical representation of BERT's ability to encode sentence relations. We reasoned that the better an independent classification model performed when trained and tested on last hidden state data derived from BERT, the better BERT itself captured those sentence relations in the data. If there happened to be a difference in the classifier's performance between the control and variable, then it would be a sign that BERT did better at encoding those relations in one instance over the other, in turn telling us how semantically relevant spatial prepositions are to BERT's ability to adequately represent entailment in latent space. A key part of this experiment was that our BERT model was not fine tuned. Rather, it was off-the-shelf. We did this because we were seeking to test the abilities of an LLM that was accessible to the wider NLP community in its base form. Experiment one had a total of seven trials, each altering several components of the hyperparameter space. Different trials also used different classification models. Trials 1 through 6 used a logistic regression model, whereas Trial 7 used Random Forest Classifier. For all trials, the cross validation method used was a Stratified K-Fold of 10 folds. All our classification models and cross validation methods came from the scikit-learn Python package.
+
+%Experiment 2
+\subsection{The Second Experiment}
+
+Our second experiment took a different approach. Instead of using an independent classification model, we fine-tuned BERT to do the classification task.
+We split our control and variable data into 90\%/10\% train-test sets. For each of the 10 trials we ran, we randomized this split with a different seed to make sure the fine-tuned BERT would receive a fair assessment. We fine-tuned BERT on the 90\% of the control data set aside for training. Then, we tested the fine-tuned BERT twice on each of the remaining 10\% control and variable data. We prevented data leakage from invalidating our results by splitting the data correspondingly. Therefore, 10\% of sentence pairs in the test control set were the same sentence pairs in the variable test set, such that the only difference between the two sets was the lack of spatial prepositions in the premise sentence. Additionally, the remaining 90\% of sentence pairs in the variable set that matched the the control training set were excluded from ever appearing in a test set. During training, none of BERT's 12 layers were frozen.
+
+
+\section{Results}
+\subsection{The First Experiment}
+The results of the first experiment were obtained by taking the average accuracy score across all 10 folds of a specific model and hyperparameter combination. For trials 1 and 2, the hyperparameters we adjusted were the regularization method, the solver, the solver iteration. For trials 3 to 6, we added the inverse of regularization strength as an additional hyperparameter. Additionally, trials 1 and 2 tried various levels of PCA dimensionality reduction. Trials 3 through 6 all used a PCA dimensionality reduction to 90\% for all hyperparameter combinations as it was found to be most optimal after based on results from the first two trials. The hyperparameters of trial 7 were n\_components and n\_estimator as well as the pipeline order of either, scaling followed by 90\% PCA dimensionality reduction, scaling without any dimensionality reduction, or 90\% PCA dimensionality reduction followed by scaling. Trials also varied based on what data pulled from BERT's last hidden state was used as input for the classification task. Trials 1 and 3 used concatenated CLS vectors and Trial 5 used jointly embedded CLS vectors. Likewise, Trials 2 and 4 used concatenated mean pooled vectors and Trials 6 and 7 used mean pooled joint embedding vectors. Not all hyperparameter combinations were possible. Those that were n/a are marked with an asterisk in the data tables below. All the averages have been rounded to the nearest tenth of a percent.
+
+%trial 1
+
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|l|l|l|c|r|r|}
+    \hline
+        Dimensionality Reduction? & Regularization & Solver & Solver Iteration & Control & Variable \\ \hline
+        \mutlirow{No} &\multirow[t]{2}{*}{L1} & Liblinear & * & 36.9\% & 37.3\% \\ \cline{3-6}
+         &  & Saga & * & 38.9\% & 38.9\% \\ \cline{2-6}
+         & \multirow[t]{2}{*}{L2} & Liblinear & * & 37.0\% & 36.4\% \\ \cline{3-6}
+         &  & Saga & * & 36.6\% & 37.3\% \\ \hline
+        Yes (0.3) & L1 & Liblinear & * & 36.0\% & 35.5\% \\ \hline
+        Yes (0.6) & L1 & Liblinear & * & 39.0\% & 38.8\% \\ \hline
+        Yes (0.9) & L1 & Liblinear & * & 46.3\% & 45.5\% \\ \hline
+        Yes (0.99) & L1 & Liblinear & * & 42.2\% & 42.8\% \\ \hline
+        \multirow[t]{2}{*}{Yes (0.9)} & L1 & Saga & 1000 & 46.3\% & 45.4\% \\ \cline{2-6}
+         & L1 & Saga & 2000 & 46.4\% & 45.4\% \\ \hline
+    \end{tabular}
+    \caption{Trial 1 Average Accuracy Scores}
+    \label{t:trial_1_acc}
+\end{table}
+
+\vspace{1cm}
+
+%trial 2
+
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|l|l|l|c|r|r|}
+    \hline
+        Dimensionality Reduction? & Regularization & Solver & Solver Iteration & Control & Variable \\ \hline
+        \multirow[t]{4}{*}{No} & \multirow{2}{*}{L1} & Liblinear & * &  40.1\% &  40.3\% \\ \cline{3-6}
+        ~ & ~ & Saga & * &  41.7\% &  41.2\% \\ \cline{2-6}
+        ~ & \multirow{2}{*}{L2} & Liblinear & * &  39.5\% &  39.2\% \\ \cline{3-6}
+        ~ & ~ & Saga & * &  40.2\% &  39.3\% \\ \hline
+        Yes (0.3) & L1 & Liblinear & * &  36.2\% & 36.2\% \\ \hline
+        Yes (0.6) & L1 & Liblinear & * &  37.1\% & 37.4\% \\ \hline
+        Yes (0.9) & L1 & Liblinear & * &  48.0\% & 48.2\% \\ \hline
+        Yes (0.99) & L1 & Liblinear & * & 43.4\% & 43.3\% \\ \hline
+        \multirow{2}{*}{Yes (0.9)} & \multirow{2}{*}{L1} & Saga & 1000 &  48.0\% & 48.3\% \\ \cline{3-6}
+        ~ & ~ & Saga & 2000 &  48.0\% & 48.3\% \\ \hline
+    \end{tabular}
+    \caption{Trial 2 Average Accuracy Scores}
+    \label{t:trial_2_acc}
+\end{table}
+
+The first and second trials showed that the logistic regression model was underfitting the data on all hyperparameter combinations. In a three way classification task, scores hovering around the high thirties to low forties are only slightly better than randomly guessing whether a sentence pair entails, contradicts, or neutralizes. Though, the accuracy scores of 46.3\% and 45.5\% in trial one (Table \ref{t:trial_1_acc}) and 48.0\% and 48.2\% in trial two (Table \ref{t:trial_2_acc}) when the dimensionality of the data was reduced to 90\% showed the model performed better there than compared to other hyperparameter combinations. This prompted us to continue our hyperparameter search using a PCA dimensionality reduction of 0.9.
+
+
+%trial 3
+
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|d{2}|l|l|l|r|r|r|}
+    \hline
+        \multicolumn{1}{|c|}{Inv. Reg. Strength} & DimRed? & Reg. & Solver & SolvIt & Control & Variable \\ \hline
+        0.001 & \multirow{16}{*}{Yes (0.9)} & \multirow{14}{*}{L1} & \multirow{7}{*}{LibLinear} & \multirow{7}{*}{5000} & 35.3\% & 35.1\% \\ \cline{1-1} \cline{6-7}
+        0.01 &  &  &  &  & 45.3\% & 44.6\% \\ \cline{1-1} \cline{6-7}
+        0.1 &  &  &  &  & 46.3\% & 45.8\% \\ \cline{1-1} \cline{6-7}
+        1 &  &  &  &  & 46.3\% & 45.5\% \\ \cline{1-1} \cline{6-7}
+        10 &  &  &  &  & 46.3\% & 45.4\% \\ \cline{1-1} \cline{6-7}
+        100 &  &  &  &  & 46.3\% & 45.4\% \\ \cline{1-1} \cline{6-7}
+        1000 &  &  &  &  & 46.3\% & 45.4\% \\ \cline{1-1} \cline{4-7}
+        0.001 &  &  & \multirow{7}{*}{Saga} & \multirow{7}{*}{200} & 35.7\% & 35.6\% \\ \cline{1-1} \cline{6-7}
+        0.01 &  &  &  &  & 45.5\% & 44.9\% \\ \cline{1-1} \cline{6-7}
+        0.1 &  &  &  &  & 46.1\% & 45.5\% \\ \cline{1-1} \cline{6-7}
+        1 &  &  &  &  & 46.3\% & 45.4\% \\ \cline{1-1} \cline{6-7}
+        10 &  &  &  &  & 46.4\% & 45.3\% \\ \cline{1-1} \cline{6-7}
+        100 &  &  &  &  & 46.4\% & 45.4\% \\ \cline{1-1} \cline{6-7}
+        1000 &  &  &  &  & 46.4\% & 45.4\% \\ \cline{1-1} \cline{3-7}
+        1 &  & \multirow{2}{*}{L2} & LibLinear & 5000 & 46.3\% & 45.4\% \\ \cline{4-7}
+         &  &  & Saga & 200 & 46.4\% & 45.5\% \\ \hline
+    \end{tabular}
+    \caption{Trial 3 Average Accuracy Scores}
+    \label{t:trial_3_acc}
+\end{table}
+
+
+
+
+%trial 4
+
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|d{2}|l|l|l|r|r|r|}
+    \hline
+       \multicolumn{1}{|c|}{Inv. Reg. Strength} & DimRed? & Reg. & Solver & SolvIt & Control & Variable \\ \hline
+        0.001 & \multirow{16}{*}{Yes (0.9)} & \multirow{14}{*}{L1} & \multirow{7}{*}{LibLinear} & \multirow{7}{*}{5000} & 33.6\% & 33.5\% \\ \cline{1-1} \cline{6-7}
+        0.01 &  &  &  &  & 48.5\% & 47.7\% \\ \cline{1-1} \cline{6-7}
+        0.1 &  &  &  &  & 48.5\% & 48.5\% \\ \cline{1-1} \cline{6-7}
+        1 &  &  &  &  & 47.9\% & 48.2\% \\ \cline{1-1} \cline{6-7}
+        10 &  &  &  &  & 48.0\% & 48.1\% \\ \cline{1-1} \cline{6-7}
+        100 &  &  &  &  & 48.0\% & 48.1\% \\ \cline{1-1} \cline{6-7}
+        1000 &  &  &  &  & 48.0\% & 48.1\% \\ \cline{1-1} \cline{4-7}
+        0.001 &  &  & \multirow{7}{*}{Saga} & \multirow{7}{*}{200} & 33.6\% & 36.2\% \\ \cline{1-1} \cline{6-7}
+        0.01 &  &  &  &  & 48.3\% & 47.4\% \\ \cline{1-1} \cline{6-7}
+        0.1 &  &  &  &  & 48.5\% & 48.4\% \\ \cline{1-1} \cline{6-7}
+        1 &  &  &  &  & 48.0\% & 48.3\% \\ \cline{1-1} \cline{6-7}
+        10 &  &  &  &  & 48.0\% & 48.3\% \\ \cline{1-1} \cline{6-7}
+        100 &  &  &  &  & 47.9\% & 48.3\% \\ \cline{1-1} \cline{6-7}
+        1000 &  &  &  &  & 47.9\% & 48.3\% \\ \cline{1-1} \cline{3-7}
+        \multirow{2}{*}{1} &  & \multirow{2}{*}{L2} & LibLinear & 5000 & 47.9\% & 48.3\% \\ \cline{4-7}
+         &  &  & Saga & 200 & 48.0\% & 48.0\% \\ \hline
+    \end{tabular}
+    \caption{Trial 4 Average Accuracy Scores}
+    \label{t:trial_4_acc}
+\end{table}
+
+
+For trials 3 and 4, we experiment further with the strength of regularization, $C$. For scikit learns, a value of $C=1$ is the default. A $C$ value lower than 1 yields a stronger regularization, higher yields a weaker regularization. In machine learning, a general rule of thumb is that weaker regularization prevents underfitting. However, that was not the case for us. For all combinations in trials 3 and 4, the control--variable performance metrics never eclipsed 46.4--45.4 (Table \ref{t:trial_3_acc}) and 48.0--48.3 (Table \ref{t:trial_4_acc}) respectively. Because weaker regularization did not resolve our underfitting issue, it indicated that the quality of our data was hampering the logistic regression model's ability to train on it. This indicated to us that concatenated CLS and mean pool vectors were suboptimal. 
+
+
+
+
+
+
+
+
+
+
+%trial 5
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|r|l|l|l|r|r|r|}
+    \hline
+         Inv. Reg. Strength & DimRed? & Reg. & Solver & SolvIt & Control & Variable \\ \hline
+        \multirow{4}{*}{1} & \multirow{4}{*}{Yes (0.9)} & \multirow{2}{*}{L1} & LibLinear & 5000 & 50.6\% & 51.1\% \\ \cline{4-7}
+         &  &  & Saga & 200 & 50.4\% & 51.1\% \\ \cline{3-7}
+         &  & \multirow{2}{*}{L2} & LibLinear & 5000 & 50.5\% & 51.1\% \\ \cline{4-7}
+         &  &  & Saga & 200 & 50.3\% & 50.8\% \\ \hline
+    \end{tabular}
+    \caption{Trial 5 Average Accuracy Scores}
+    \label{t:trial_5_acc}
+\end{table}
+
+
+%trial 6
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|r|l|l|l|r|r|r|}
+    \hline
+        Inv. Reg. Strength & DimRed? & Reg. & Solver & SolvIt & Control & Variable\\ \hline
+        \multirow{4}{*}{1} & \multirow{4}{*}{Yes (0.9)} & \multirow{2}{*}{L1} & LibLinear & 5000 & 44.3\% & 44.8\% \\ \cline{4-7}
+         &  &  & Saga & 200 & 44.5\% & 44.8\% \\ \cline{3-7}
+         &  & \multirow{2}{*}{L2} & LibLinear & 5000 & 44.5\% & 44.8\% \\ \cline{4-7}
+         &  &  & Saga & 200 & 44.8\% & 44.8\% \\ \hline
+    \end{tabular}
+    \caption{Trial 6 Average Accuracy Scores}
+    \label{t:trial_6_acc}
+\end{table}
+
+For the fifth and sixth trials, we limited the amount of hyperparameters combinations we were turning to save on computational resources. We made this decision based on the previous trials showing little variation of scores between different combinations. The fifth trial showed average control--variable accuracies of in the range of 50 to 51 percent in Table \ref{t:trial_5_acc}. These scores were the highest seen across all trials. However, they are still too low to say that the model was able to properly discern BERT's encoding of either the control or variable group. Thus, we cannot use these scores to draw a conclusion about our hypothesis. The sixth trial, with with its mid 40's level scores (Table \ref{t:trial_6_acc}), provided us nothing conclusive. Trials five and six demonstrated that using jointly embedded summary vectors did not improve scores enough to make anything conclusive. We considered this was because a logistic regression model was too simplistic to pick up on any indication of linguistic inference being represented in the BERT latent space data. 
+
+
+
+%trial 7
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|r|r|r|}
+    \hline
+        Pipeline Order & n components & n estimator & Control & Variable \\ \hline
+        Scale then PCA DimRed. & \multicolumn{1}{|c|}{\multirow{5}{*}{0.9}} & 100 & 35.0\% & 34.1\% \\ \cline{1-1} \cline{3-5}
+        Scale no PCA DimRed. &  & 500 & 34.9\% & 34.7\% \\ \cline{1-1} \cline{3-5}
+        \multirow{3}{*}{PCA DimRed then Scale} &  & 100 & 37.7\% & 36.5\% \\ \cline{3-5}
+         &  & 200 & 37.7\% & 38.4\% \\ \cline{3-5}
+         &  & 500 & 38.5\% & 38.3\% \\ \hline
+    \end{tabular}
+    \caption{Trial 7 Average Accuracy Scores}
+    \label{t:trial_7_acc}
+\end{table}
+
+
+Trial 7 used the random forest classifier model instead of logistic regression. Its accuracy scores were in the mid 30's (Table \ref{t:trial_7_acc}), meaning it severely underfit the data. This, in conjunction with the results of trials 1 through 6, suggested that while BERT might be able to encode enough semantic information to represent our three types of linguistic inference, a separate classification model lacked the complexity to sufficiently interpret it.
+
+
+\subsection{The Second Experiment}
+The second experiment demonstrated that the fine-tuned BERT model was able to sufficiently do the classification task such that we could draw a conclusion from the results. BERT's average accuracy score across ten trials for the control dataset was 69.33\% (Table \ref{t:control_results}), whereas for the variable set it was 68.42\% (Table \ref{t:variable_results}). We consider the difference in average accuracy score between the control and variable sets to be insignificant. Thus, the modification of the MultiNLI to lack prepositions appears not to affect BERT's performance on encoding sentence relations. 
+
+
+%I need an paired two sample t- test no i dont
+%R Studio reveals that 
+
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|r|r|r|r|r|r|r|}
+    \hline
+        Trial & Loss & Acc & Runtime & Samp/s & Steps/s & Epoch \\ \hline
+        1 & 83.14\% & 67.44\% & 0.955 & 498.708 & 31.431 & 4 \\ \hline
+        2 & 76.82\% & 69.12\% & 0.964 & 494.019 & 31.136 & 4 \\ \hline
+        3 & 97.83\% & 66.81\% & 0.982 & 484.548 & 30.539 & 4 \\ \hline
+        4 & 95.63\% & 66.81\% & 0.958 & 496.725 & 31.306 & 4 \\ \hline
+        5 & 93.66\% & 68.91\% & 0.979 & 486.144 & 30.639 & 4 \\ \hline
+        6 & 67.80\% & 76.05\% & 0.967 & 492.512 & 31.041 & 4 \\ \hline
+        7 & 80.56\% & 70.17\% & 0.961 & 495.229 & 31.212 & 4 \\ \hline
+        8 & 91.91\% & 68.70\% & 0.972 & 489.799 & 30.870 & 4 \\ \hline
+        9 & 83.30\% & 69.96\% & 0.963 & 494.278 & 31.152 & 4 \\ \hline
+        10 & 68.91\% & 69.33\% & 0.984 & 483.719 & 30.486 & 4 \\ \hline
+    \end{tabular}
+    \caption{Control Data Results}
+    \label{t:control_results}
+\end{table}
+
+\vspace{0.5cm}
+
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{|r|r|r|r|r|r|r|}
+    \hline
+        Trial & Loss & Acc & Runtime & Samp/s & Steps/s & Epoch \\ \hline
+        1 & 82.67\% & 67.44\% & 0.903 & 527.061 & 33.218 & 4 \\ \hline
+        2 & 77.80\% & 67.02\% & 0.935 & 509.090 & 32.085 & 4 \\ \hline
+        3 & 98.30\% & 66.81\% & 0.932 & 510.876 & 32.198 & 4 \\ \hline
+        4 & 97.72\% & 65.76\% & 0.934 & 509.913 & 32.137 & 4 \\ \hline
+        5 & 95.74\% & 68.70\% & 0.931 & 511.511 & 32.238 & 4 \\ \hline
+        6 & 69.78\% & 74.37\% & 0.940 & 506.637 & 31.931 & 4 \\ \hline
+        7 & 82.20\% & 69.54\% & 0.935 & 509.196 & 32.092 & 4 \\ \hline
+        8 & 91.61\% & 66.60\% & 0.939 & 507.089 & 31.959 & 4 \\ \hline
+        9 & 83.36\% & 70.17\% & 0.936 & 508.442 & 32.045 & 4 \\ \hline
+        10 & 70.79\% & 67.86\% & 0.933 & 510.092 & 32.149 & 4 \\ \hline
+    \end{tabular}
+    \caption{Variable Data Results}
+    \label{t:variable_results}
+\end{table}
+
+Further statistical analysis in R Studio revealed that the p-value of a paired t-test between the sets of trial results from the control and variable sets was $p-value = 0.0111$. However, a data set of only 10 control and variable trials is too small for a p-value to be an adequate measure of significance, as sets that small tend to skew towards very low p-values. Thus, it has no bearing on our conclusion about BERT's performance results from the second experiment.
+
+\begin{table}[!b]
+    \centering
+    \begin{tabular}{|r|r|r|r|r|r|r|r|}
+    \hline
+        Trial & Seed & Loss & Steps & Runtime & Samp/s & Steps/s & Epoch \\ \hline
+        1 & 43 &57.20\% & 1072 & 130.616 & 131.163 & 8.207 & 4 \\ \hline
+        2 & 44 &57.10\% & 1072 & 136.072 & 125.904 & 7.878 & 4 \\ \hline
+        3 & 45 &60.53\% & 1072 & 137.441 & 124.650 & 7.800 & 4 \\ \hline
+        4 & 46 &58.01\% & 1072 & 138.352 & 123.829 & 7.748 & 4 \\ \hline
+        5 & 47 &54.25\% & 1072 & 140.198 & 122.199 & 7.646 & 4 \\ \hline
+        6 & 48 &59.61\% & 1072 & 137.945 & 124.195 & 7.771 & 4 \\ \hline
+        7 & 49 &56.71\% & 1072 & 140.782 & 121.692 & 7.615 & 4 \\ \hline
+        8 & 50 &59.65\% & 1072 & 140.604 & 121.846 & 7.624 & 4 \\ \hline
+        9 & 51 &56.58\% & 1072 & 138.550 & 123.652 & 7.737 & 4 \\ \hline
+        10 & 52 &58.35\% & 1072 & 138.855 & 123.381 & 7.720 & 4 \\ \hline
+    \end{tabular}
+    \caption{Additional Information About Fine-Tuning}
+    \label{t:finetuning}
+\end{table}
+
+As an additional note, the training loss, hyperparameters, and randomization seeds are provided in Table \ref{t:finetuning}. These show that our fine-tuned model's loss function was able to converge such that our model fit the data. Furthermore, it shows that our test and training data did not have data leakage. These qualities demonstrate that the test scores for the control and variable sets are both conclusive and valid, meaning we can draw a conclusion from experiment two's results. 
+
+
+
+%\FloatBarrier %please for the love of god put the tables where I want them, LaTex!
+
+\section{Discussion}
+
+
+\subsection{Linguistic Implications}
+%this section is still WIP
+The negligible difference that the absence of spatial prepositions had on BERT's ability to encode logical relations is open to interpretation. However, the key takeaway for those in the field of linguistics is that BERT is able to encode logical relations despite lacking spatial prepositions. This is probably due to BERT's attention layers, which allow the model to embed a sentence with a glimpse of its surrounding context \citep{vaswani_attention_2017}. This is thanks to recursive layers in the BERT's architecture, where the embeddings of surrounding words influence the embedding of the current word. Therefore, the removal of a word from a sentence does not throw off BERT, as the model builds its representation of language in a way that is holistic and semantically preserving. This isn't to say that BERT's encoding abilities are impervious to missing word. It does mean that spatial prepositions alone likely don't have enough semantic relevance to throw off BERT's attention layer. Perhaps there are other elements of landmark and trajector sentences that when removed, may prove more effective in disrupting BERT's attention layers. Though, a follow up experiment would be needed to test that hypothesis. Finally, it is important to note that these results and their interpretations are not set in stone. Linguistically, BERT's inference abilities are only one small piece of the puzzle for how LLMs operate and alone does not provide commentary on how language itself functions, yet rather only how the BERT model perceives it.  
+
+
+
+\subsection{Limitations}
+
+Experiment two remains incomplete in that it didn't explore different models besides BERT. Furthermore, the accuracy scores of 69.33\% (Table \ref{t:control_results}) and 68.42 (Table \ref{t:variable_results}), while they show the model fit the data, leave much to be desired. The original creators of the MultiNLI dataset achieved accuracy score percentages of high 70's to mid 80's with models such as Continuous Bag of Words (CBOW) and Enhanced Sequential Inference Model (ESIM) \citep{williams_bowman_multinli}. Those models are older than BERT and considered to be less complex than BERT. Unlike us, Bowman and his team had access to greater computational resources and thus were able to train their models on the full 432K training set. The fact that our fine-tuned BERT model underperformed compared to less advanced models demonstrates that our experiments were limited by the size of our dataset. It is possible that a difference in performance between a control and variable set could be more pronounced given more data. Some might find our metrics for experiment two to be lacking. Average accuracy is a useful diagnostic, but it is not the only one used for measuring model performance. We still believe accuracy scores are a reliable metric, though future experiments could look at other measures. Finally, it can be argued that we should have done our trials in experiment two at a larger scale in order to do a more rigorous statistical analysis to determine if the difference between the data sets had more significant than we concluded. Again however, we did not have the computational resources to do that with this study. Ideally, the second experiment should be followed up on in another paper. 
+
+
+\section{Conclusion}
+In conclusion, we set out to discover if the absence of spatial prepositions affected the BERT LLM's ability to encode logical relations between sentences. Through the course of two experiments, we were able to determine that the answer was no. Spatial prepositions do not have an effect on the model's ability to encode sentence relations. For linguists, this means that BERT's attention mechanics skirt around the issue of missing words, though this is open to interpretation. For machine learning enthusiasts, this conclusion is not complete. The limitations of this experiment leave many points for further follow up and experimentation. 
+
+
+
+%put some speculation in here
+
+
+
+
+%it was a 90-10 train test split
+\section{Citations and references}
+\nocite{*}
+%%% REFERENCES
+\setlength{\bibsep}{0pt plus 0.3ex}
+\setlength{\bibhang}{0.3in}	% hanging indent for references must be 0.3in
+\titleformat{\section}{\normalfont\bfseries}{\thesection}{.5em}{} % references section not supposed to be followed by a period
+
+\bibliographystyle{sp-lsa.bst}	% S\&P bibliography style
+%S\&P, an LSA publication, meets the LSA guidelines. 
+%See: http://info.semprag.org 
+%and get the bst at: https://raw.githubusercontent.com/semprag/tex/master/sp.bst 
+%If using the sp.bst, the following command turns your DOIs into links
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{https://doi.org/#1}} %modified from sp.cls
+\bibliography{citations} % your bib file
+\end{document}
+
+
+
+\section{Citations and references} Use author-date notation for in-text citations, as provided by \verb=\natbib=. Examples are (please consult the references section to make sure that references are formatted properly):
+\begin{itemize}
+    \item \verb=\cite{anderbois_semantics_2014}= which yields \cite{anderbois_semantics_2014}
+    \item \verb=\cite{Goldsmith+2010+19+52}= which yields
+    \cite{Goldsmith+2010+19+52}
+    \item \verb=\citep{claus_puzzling_2017}= which yields \citep{claus_puzzling_2017}
+    \item \verb=\citep{chomsky_knowledge_1986, claus_puzzling_2017}= which yields \citep{chomsky_knowledge_1986, claus_puzzling_2017}
+    \item \verb=\citep{chomsky_knowledge_1986, chomsky_language_1987}= which yields \citep{chomsky_knowledge_1986, chomsky_language_1987}
+    \item \verb=\citep[cf.][]{nee_engaging_2021}= which yields \citep[cf.][]{nee_engaging_2021}
+    \item \verb=\citep[e.g.,][50-95]{fodor_reanalysis_1998}= which yields \citep[e.g.,][50-95]{fodor_reanalysis_1998}
+    \item \verb=\citealt{silk_modality_2012}= which yields \citealt{silk_modality_2012}
+    \item see full documentation for \verb=\natbib= at\\ \href{https://mirrors.rit.edu/CTAN/macros/latex/contrib/natbib/natbib.pdf}{https://mirrors.rit.edu/CTAN/macros/latex/contrib/natbib/natbib.pdf}
+\end{itemize}
+
+
